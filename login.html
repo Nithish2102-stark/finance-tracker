@@ -1,30 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finance Tracker - Login</title>
-
+    
     <link rel="stylesheet" href="assets/css/auth.css">
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
-
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
-
 <body>
 
     <!-- LOADER -->
-
     <div id="loader">
-        <img src="assets/images/logo.png" alt="Finance Tracker">
+        <img src="assets/images/logo.png" alt="Finance Tracker Logo">
     </div>
 
-    <!-- BACKGROUND -->
-
+    <!-- BACKGROUND GLOWS -->
     <div class="background">
         <span></span>
         <span></span>
@@ -33,530 +24,193 @@
     </div>
 
     <!-- LOGIN CONTAINER -->
-
     <div class="auth-container">
-
         <!-- LEFT PANEL -->
-
         <div class="left-panel">
-
             <div class="brand">
-
-                <img src="assets/images/logo.png" alt="logo">
-
+                <img src="assets/images/logo.png" alt="Logo">
                 <h1>Finance Tracker</h1>
-
             </div>
-
             <h2>Track. Manage. Grow.</h2>
-
             <p>
                 Take control of your finances with smart budgeting,
                 expense tracking, savings goals, reports,
                 and real-time financial insights.
             </p>
-
             <div class="features">
-
                 <div>
                     <i class="fas fa-chart-line"></i>
                     Financial Analytics
                 </div>
-
                 <div>
                     <i class="fas fa-wallet"></i>
                     Expense Tracking
                 </div>
-
                 <div>
                     <i class="fas fa-piggy-bank"></i>
                     Savings Goals
                 </div>
-
                 <div>
                     <i class="fas fa-file-invoice-dollar"></i>
                     Reports & Insights
                 </div>
-
             </div>
-
         </div>
 
         <!-- RIGHT PANEL -->
-
         <div class="right-panel">
-
             <form id="loginForm" class="login-card">
-
                 <h2>Welcome Back 👋</h2>
+                <p>Login to continue managing your finances.</p>
 
-                <p>
-                    Login to continue managing your finances.
-                </p>
-
-                <!-- EMAIL -->
-
+                <!-- Email -->
                 <div class="input-group">
-
                     <label>Email Address</label>
-
                     <div class="input-box">
-                        <i class="fas fa-envelope"></i>
-
-                        <input
-                            type="email"
-                            id="email"
-                            placeholder="Enter your email"
-                            required>
+                        <i class="fas fa-envelope left-icon"></i>
+                        <input type="email" id="email" placeholder="john@example.com" required>
                     </div>
-
                 </div>
 
-                <!-- PASSWORD -->
-
+                <!-- Password -->
                 <div class="input-group">
-
                     <label>Password</label>
-
                     <div class="input-box">
-
-                        <i class="fas fa-lock"></i>
-
-                        <input
-                            type="password"
-                            id="password"
-                            placeholder="Enter password"
-                            required>
-
-                        <i
-                            class="fas fa-eye toggle-password"
-                            id="togglePassword"></i>
-
+                        <i class="fas fa-lock left-icon"></i>
+                        <input type="password" id="password" placeholder="Enter Password" required>
+                        <i id="togglePassword" class="fas fa-eye toggle-password"></i>
                     </div>
-
                 </div>
 
-                <!-- OPTIONS -->
-
+                <!-- Options -->
                 <div class="options">
-
                     <label class="remember">
-
-                        <input type="checkbox" id="rememberMe">
-
-                        Remember Me
-
+                        <input type="checkbox" id="rememberMe"> Remember Me
                     </label>
-
                     <a href="#">Forgot Password?</a>
-
                 </div>
 
-                <!-- LOGIN BUTTON -->
-
+                <!-- Submit Button -->
                 <button type="submit" class="login-btn">
-
-                    <i class="fas fa-right-to-bracket"></i>
-
-                    Login
-
+                    <i class="fas fa-right-to-bracket"></i> Login
                 </button>
-
-                <!-- OR -->
 
                 <div class="divider">
-
                     <span>OR</span>
-
                 </div>
-
-                <!-- GOOGLE -->
 
                 <button type="button" class="google-btn">
-
-                    <i class="fab fa-google"></i>
-
-                    Continue with Google
-
+                    <i class="fab fa-google"></i> Continue with Google
                 </button>
 
-                <!-- SIGNUP -->
-
                 <div class="signup-link">
-
-                    Don't have an account?
-
-                    <a href="signup.html">Create Account</a>
-
+                    Don't have an account? <a href="signup.html">Create Account</a>
                 </div>
-
             </form>
-
         </div>
-
     </div>
 
+    <!-- SCRIPTS -->
+    <script src="assets/js/db.js"></script>
+    <script src="assets/js/app.js"></script>
     <script>
-
-        // LOADER
-
+        // Page entrance loader dismissal
         window.addEventListener("load", () => {
-
             setTimeout(() => {
+                const loader = document.getElementById("loader");
+                if (loader) {
+                    loader.style.opacity = "0";
+                    setTimeout(() => {
+                        loader.style.display = "none";
+                    }, 500);
+                }
+            }, 800);
+        });
 
-                document.getElementById("loader").style.opacity = "0";
+        // Password visibility toggler
+        const passwordInput = document.getElementById("password");
+        const toggleIcon = document.getElementById("togglePassword");
+
+        toggleIcon.addEventListener("click", () => {
+            const isPassword = passwordInput.type === "password";
+            passwordInput.type = isPassword ? "text" : "password";
+            toggleIcon.classList.toggle("fa-eye", !isPassword);
+            toggleIcon.classList.toggle("fa-eye-slash", isPassword);
+        });
+
+        // Form Submit Login Handler
+        document.getElementById("loginForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById("email").value.trim().toLowerCase();
+            const password = document.getElementById("password").value;
+            const rememberMe = document.getElementById("rememberMe")?.checked;
+
+            if (email === "" || password === "") {
+                if (window.showNotification) {
+                    window.showNotification("Please fill in all fields!", "error");
+                } else {
+                    alert("Please fill in all fields!");
+                }
+                return;
+            }
+
+            // Retrieve registered users
+            const users = JSON.parse(localStorage.getItem("finance_users")) || [];
+            let userValid = false;
+            let fullName = "";
+
+            const userMatch = users.find(u => u.email === email && u.password === password);
+
+            if (userMatch) {
+                userValid = true;
+                fullName = userMatch.fullName || userMatch.name || "User";
+            } else if (email === "admin@example.com" && password === "admin") {
+                userValid = true;
+                fullName = "Admin User";
+                // Register admin user to list if not present
+                if (!users.some(u => u.email === "admin@example.com")) {
+                    users.push({
+                        fullName: "Admin User",
+                        email: "admin@example.com",
+                        password: "admin"
+                    });
+                    localStorage.setItem("finance_users", JSON.stringify(users));
+                }
+            }
+
+            if (userValid) {
+                const sessionData = {
+                    loggedIn: true,
+                    email: email,
+                    fullName: fullName
+                };
+                
+                sessionStorage.setItem("financeSession", JSON.stringify(sessionData));
+                
+                if (rememberMe) {
+                    localStorage.setItem("financeTrackerUser", JSON.stringify(sessionData));
+                } else {
+                    localStorage.removeItem("financeTrackerUser");
+                }
+
+                if (window.showNotification) {
+                    window.showNotification(`Welcome back, ${fullName}! Logging you in...`, "success");
+                } else {
+                    alert("Welcome back!");
+                }
 
                 setTimeout(() => {
-
-                    document.getElementById("loader").style.display = "none";
-
-                }, 500);
-
-            }, 1800);
-
-        });
-
-        // PASSWORD TOGGLE
-
-        const togglePassword =
-            document.getElementById("togglePassword");
-
-        const password =
-            document.getElementById("password");
-
-        togglePassword.addEventListener("click", () => {
-
-            const type =
-                password.getAttribute("type") === "password"
-                    ? "text"
-                    : "password";
-
-            password.setAttribute("type", type);
-
-            togglePassword.classList.toggle("fa-eye");
-            togglePassword.classList.toggle("fa-eye-slash");
-
-        });
-
-        // LOGIN
-
-        document
-            .getElementById("loginForm")
-            .addEventListener("submit", function (e) {
-
-                e.preventDefault();
-
-                const email =
-                    document.getElementById("email").value.trim().toLowerCase();
-
-                const password =
-                    document.getElementById("password").value;
-
-                const rememberMe =
-                    document.getElementById("rememberMe")?.checked;
-
-                if (email === "" || password === "") {
-                    alert("Please fill all fields");
-                    return;
-                }
-
-                // Check registered users list
-                const users = JSON.parse(localStorage.getItem("finance_users")) || [];
-                let userValid = false;
-                let fullName = "";
-
-                const userMatch = users.find(u => u.email === email && u.password === password);
-
-                if (userMatch) {
-                    userValid = true;
-                    fullName = userMatch.fullName || userMatch.name || "User";
-                } else if (email === "admin@example.com" && password === "admin") {
-                    userValid = true;
-                    fullName = "Admin User";
-                    // Add admin to list if not present
-                    if (!users.some(u => u.email === "admin@example.com")) {
-                        users.push({
-                            fullName: "Admin User",
-                            email: "admin@example.com",
-                            password: "admin"
-                        });
-                        localStorage.setItem("finance_users", JSON.stringify(users));
-                    }
-                }
-
-                if (userValid) {
-                    const sessionData = {
-                        loggedIn: true,
-                        email: email,
-                        fullName: fullName
-                    };
-                    
-                    sessionStorage.setItem("financeSession", JSON.stringify(sessionData));
-                    
-                    if (rememberMe) {
-                        localStorage.setItem("financeTrackerUser", JSON.stringify(sessionData));
-                    } else {
-                        localStorage.removeItem("financeTrackerUser");
-                    }
-                    
                     window.location.href = "pages/dashboard.html";
+                }, 1200);
+            } else {
+                if (window.showNotification) {
+                    window.showNotification("Invalid email or password! Check your credentials.", "error");
                 } else {
-                    alert("Invalid email or password. You can use 'admin@example.com' with password 'admin' for testing.");
+                    alert("Invalid email or password!");
                 }
-
-            });
-
+            }
+        });
     </script>
-
-    <style>
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        body {
-            min-height: 100vh;
-            overflow: hidden;
-            background: linear-gradient(
-                    135deg,
-                    #0f172a,
-                    #1e3a8a,
-                    #2563eb
-            );
-        }
-
-        #loader{
-            position:fixed;
-            inset:0;
-            background:white;
-            z-index:9999;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            transition:.5s;
-        }
-
-        #loader img{
-            width:180px;
-            animation:zoom 2s ease;
-        }
-
-        @keyframes zoom{
-            from{
-                transform:scale(0);
-            }
-            to{
-                transform:scale(1);
-            }
-        }
-
-        .background span{
-            position:absolute;
-            border-radius:50%;
-            background:rgba(255,255,255,.08);
-            animation:float 12s infinite;
-        }
-
-        .background span:nth-child(1){
-            width:300px;
-            height:300px;
-            top:-100px;
-            left:-100px;
-        }
-
-        .background span:nth-child(2){
-            width:250px;
-            height:250px;
-            bottom:-80px;
-            right:-80px;
-        }
-
-        .background span:nth-child(3){
-            width:180px;
-            height:180px;
-            top:60%;
-            left:10%;
-        }
-
-        .background span:nth-child(4){
-            width:120px;
-            height:120px;
-            top:15%;
-            right:15%;
-        }
-
-        @keyframes float{
-            50%{
-                transform:translateY(-20px);
-            }
-        }
-
-        .auth-container{
-            width:90%;
-            max-width:1300px;
-            height:90vh;
-            margin:auto;
-            display:flex;
-            margin-top:5vh;
-            border-radius:30px;
-            overflow:hidden;
-            backdrop-filter:blur(20px);
-            background:rgba(255,255,255,.08);
-            border:1px solid rgba(255,255,255,.2);
-        }
-
-        .left-panel{
-            flex:1;
-            color:white;
-            padding:60px;
-            display:flex;
-            flex-direction:column;
-            justify-content:center;
-        }
-
-        .brand{
-            display:flex;
-            align-items:center;
-            gap:15px;
-            margin-bottom:30px;
-        }
-
-        .brand img{
-            width:70px;
-        }
-
-        .left-panel h2{
-            font-size:42px;
-            margin-bottom:20px;
-        }
-
-        .left-panel p{
-            line-height:1.8;
-            opacity:.9;
-        }
-
-        .features{
-            margin-top:40px;
-        }
-
-        .features div{
-            margin-bottom:15px;
-            font-size:18px;
-        }
-
-        .features i{
-            margin-right:10px;
-        }
-
-        .right-panel{
-            flex:1;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            padding:40px;
-        }
-
-        .login-card{
-            width:100%;
-            max-width:500px;
-            background:white;
-            padding:40px;
-            border-radius:25px;
-        }
-
-        .login-card h2{
-            margin-bottom:10px;
-        }
-
-        .input-group{
-            margin-top:20px;
-        }
-
-        .input-group label{
-            display:block;
-            margin-bottom:8px;
-        }
-
-        .input-box{
-            position:relative;
-        }
-
-        .input-box input{
-            width:100%;
-            padding:14px 45px;
-            border:1px solid #ddd;
-            border-radius:12px;
-        }
-
-        .input-box i:first-child{
-            position:absolute;
-            left:15px;
-            top:16px;
-        }
-
-        .toggle-password{
-            position:absolute;
-            right:15px;
-            top:16px;
-            cursor:pointer;
-        }
-
-        .options{
-            display:flex;
-            justify-content:space-between;
-            margin-top:15px;
-            font-size:14px;
-        }
-
-        .login-btn{
-            width:100%;
-            margin-top:25px;
-            padding:14px;
-            border:none;
-            border-radius:12px;
-            background:#2563eb;
-            color:white;
-            font-size:16px;
-            cursor:pointer;
-        }
-
-        .google-btn{
-            width:100%;
-            padding:14px;
-            margin-top:15px;
-            border:none;
-            border-radius:12px;
-            background:#f3f4f6;
-            cursor:pointer;
-        }
-
-        .divider{
-            text-align:center;
-            margin:20px 0;
-        }
-
-        .signup-link{
-            margin-top:20px;
-            text-align:center;
-        }
-
-        @media(max-width:900px){
-
-            .left-panel{
-                display:none;
-            }
-
-            .right-panel{
-                width:100%;
-            }
-
-        }
-
-    </style>
-
 </body>
-
 </html>

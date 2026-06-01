@@ -1,329 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finance Tracker - Sign Up</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
-
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-    <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:'Poppins',sans-serif;
-        }
-
-        body{
-            min-height:100vh;
-            overflow:hidden;
-            background:linear-gradient(
-                135deg,
-                #0f172a,
-                #1e3a8a,
-                #2563eb
-            );
-        }
-
-        #loader{
-            position:fixed;
-            inset:0;
-            background:white;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            z-index:9999;
-            transition:.5s;
-        }
-
-        #loader img{
-            width:180px;
-            animation:zoom 2s ease;
-        }
-
-        @keyframes zoom{
-            from{
-                transform:scale(0);
-                opacity:0;
-            }
-            to{
-                transform:scale(1);
-                opacity:1;
-            }
-        }
-
-        .background span{
-            position:absolute;
-            border-radius:50%;
-            background:rgba(255,255,255,.08);
-            animation:float 12s infinite;
-        }
-
-        .background span:nth-child(1){
-            width:280px;
-            height:280px;
-            top:-80px;
-            left:-80px;
-        }
-
-        .background span:nth-child(2){
-            width:220px;
-            height:220px;
-            right:-60px;
-            bottom:-60px;
-        }
-
-        .background span:nth-child(3){
-            width:180px;
-            height:180px;
-            top:60%;
-            left:10%;
-        }
-
-        .background span:nth-child(4){
-            width:120px;
-            height:120px;
-            top:15%;
-            right:15%;
-        }
-
-        @keyframes float{
-            50%{
-                transform:translateY(-25px);
-            }
-        }
-
-        .container{
-            width:90%;
-            max-width:1400px;
-            height:90vh;
-            margin:auto;
-            margin-top:5vh;
-            display:flex;
-            overflow:hidden;
-            border-radius:30px;
-            backdrop-filter:blur(20px);
-            background:rgba(255,255,255,.08);
-            border:1px solid rgba(255,255,255,.15);
-        }
-
-        .left-panel{
-            flex:1;
-            color:white;
-            padding:60px;
-            display:flex;
-            flex-direction:column;
-            justify-content:center;
-        }
-
-        .brand{
-            display:flex;
-            align-items:center;
-            gap:15px;
-            margin-bottom:30px;
-        }
-
-        .brand img{
-            width:75px;
-        }
-
-        .left-panel h1{
-            font-size:48px;
-            margin-bottom:15px;
-        }
-
-        .left-panel p{
-            line-height:1.8;
-            opacity:.9;
-        }
-
-        .features{
-            margin-top:40px;
-        }
-
-        .features div{
-            margin-bottom:18px;
-            font-size:18px;
-        }
-
-        .features i{
-            margin-right:10px;
-        }
-
-        .right-panel{
-            flex:1;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            padding:30px;
-        }
-
-        .signup-card{
-            width:100%;
-            max-width:520px;
-            background:white;
-            border-radius:25px;
-            padding:35px;
-        }
-
-        .signup-card h2{
-            margin-bottom:8px;
-            color:#111827;
-        }
-
-        .signup-card p{
-            color:#6b7280;
-            margin-bottom:20px;
-        }
-
-        .input-group{
-            margin-bottom:18px;
-        }
-
-        .input-group label{
-            display:block;
-            margin-bottom:8px;
-            font-weight:500;
-        }
-
-        .input-box{
-            position:relative;
-        }
-
-        .input-box input{
-            width:100%;
-            padding:14px 45px;
-            border:1px solid #d1d5db;
-            border-radius:12px;
-            font-size:15px;
-            outline:none;
-        }
-
-        .input-box input:focus{
-            border-color:#2563eb;
-        }
-
-        .input-box .left-icon{
-            position:absolute;
-            left:15px;
-            top:15px;
-            color:#6b7280;
-        }
-
-        .toggle-password{
-            position:absolute;
-            right:15px;
-            top:15px;
-            cursor:pointer;
-            color:#6b7280;
-        }
-
-        .strength{
-            margin-top:8px;
-        }
-
-        .strength-bar{
-            width:100%;
-            height:6px;
-            background:#e5e7eb;
-            border-radius:10px;
-            overflow:hidden;
-        }
-
-        .strength-fill{
-            height:100%;
-            width:0%;
-            transition:.3s;
-        }
-
-        .strength-text{
-            margin-top:5px;
-            font-size:13px;
-        }
-
-        .terms{
-            display:flex;
-            gap:10px;
-            align-items:flex-start;
-            margin:20px 0;
-            font-size:14px;
-        }
-
-        .terms a{
-            color:#2563eb;
-            text-decoration:none;
-        }
-
-        .signup-btn{
-            width:100%;
-            border:none;
-            padding:14px;
-            border-radius:12px;
-            background:#2563eb;
-            color:white;
-            font-size:16px;
-            cursor:pointer;
-        }
-
-        .signup-btn:hover{
-            background:#1d4ed8;
-        }
-
-        .divider{
-            text-align:center;
-            margin:18px 0;
-            color:#6b7280;
-        }
-
-        .google-btn{
-            width:100%;
-            padding:14px;
-            border:none;
-            border-radius:12px;
-            background:#f3f4f6;
-            cursor:pointer;
-        }
-
-        .login-link{
-            margin-top:20px;
-            text-align:center;
-        }
-
-        .login-link a{
-            color:#2563eb;
-            text-decoration:none;
-            font-weight:600;
-        }
-
-        @media(max-width:900px){
-
-            .left-panel{
-                display:none;
-            }
-
-            .right-panel{
-                width:100%;
-            }
-
-            body{
-                overflow:auto;
-            }
-        }
-    </style>
+    
+    <link rel="stylesheet" href="assets/css/auth.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
-
 <body>
 
+    <!-- LOADER -->
     <div id="loader">
-        <img src="assets/images/logo.png" alt="Logo">
+        <img src="assets/images/logo.png" alt="Finance Tracker Logo">
     </div>
 
+    <!-- BACKGROUND GLOWS -->
     <div class="background">
         <span></span>
         <span></span>
@@ -331,340 +23,223 @@
         <span></span>
     </div>
 
+    <!-- MAIN CONTAINER -->
     <div class="container">
-
+        <!-- LEFT PANEL -->
         <div class="left-panel">
-
             <div class="brand">
                 <img src="assets/images/logo.png" alt="Logo">
                 <h2>Finance Tracker</h2>
             </div>
-
             <h1>Start Your Financial Journey</h1>
-
             <p>
                 Create your account and gain full control of your income,
                 expenses, budgets, reports, savings goals, and financial growth.
             </p>
-
             <div class="features">
-
                 <div>
                     <i class="fas fa-wallet"></i>
                     Track Income & Expenses
                 </div>
-
                 <div>
                     <i class="fas fa-chart-line"></i>
                     Visual Reports & Analytics
                 </div>
-
                 <div>
                     <i class="fas fa-bullseye"></i>
                     Savings Goals
                 </div>
-
                 <div>
                     <i class="fas fa-shield-alt"></i>
                     Secure Local Storage
                 </div>
-
             </div>
-
         </div>
 
+        <!-- RIGHT PANEL -->
         <div class="right-panel">
-
             <form id="signupForm" class="signup-card">
-
                 <h2>Create Account</h2>
+                <p>Join Finance Tracker today.</p>
 
-                <p>
-                    Join Finance Tracker today.
-                </p>
-
+                <!-- Name -->
                 <div class="input-group">
-
                     <label>Full Name</label>
-
                     <div class="input-box">
-
                         <i class="fas fa-user left-icon"></i>
-
-                        <input
-                            type="text"
-                            id="name"
-                            placeholder="John Smith"
-                            required>
-
+                        <input type="text" id="name" placeholder="John Smith" required>
                     </div>
-
                 </div>
 
+                <!-- Email -->
                 <div class="input-group">
-
                     <label>Email Address</label>
-
                     <div class="input-box">
-
                         <i class="fas fa-envelope left-icon"></i>
-
-                        <input
-                            type="email"
-                            id="email"
-                            placeholder="john@example.com"
-                            required>
-
+                        <input type="email" id="email" placeholder="john@example.com" required>
                     </div>
-
                 </div>
 
+                <!-- Password -->
                 <div class="input-group">
-
                     <label>Password</label>
-
                     <div class="input-box">
-
                         <i class="fas fa-lock left-icon"></i>
-
-                        <input
-                            type="password"
-                            id="password"
-                            placeholder="Create Password"
-                            required>
-
-                        <i
-                            id="togglePassword"
-                            class="fas fa-eye toggle-password"></i>
-
+                        <input type="password" id="password" placeholder="Create Password" required>
+                        <i id="togglePassword" class="fas fa-eye toggle-password"></i>
                     </div>
-
                     <div class="strength">
-
                         <div class="strength-bar">
-                            <div
-                                class="strength-fill"
-                                id="strengthFill">
-                            </div>
+                            <div class="strength-fill" id="strengthFill"></div>
                         </div>
-
-                        <div
-                            class="strength-text"
-                            id="strengthText">
-                            Password Strength
-                        </div>
-
+                        <div class="strength-text" id="strengthText">Password Strength</div>
                     </div>
-
                 </div>
 
+                <!-- Confirm Password -->
                 <div class="input-group">
-
                     <label>Confirm Password</label>
-
                     <div class="input-box">
-
                         <i class="fas fa-lock left-icon"></i>
-
-                        <input
-                            type="password"
-                            id="confirmPassword"
-                            placeholder="Confirm Password"
-                            required>
-
+                        <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
                     </div>
-
                 </div>
 
+                <!-- Terms -->
                 <div class="terms">
-
-                    <input
-                        type="checkbox"
-                        id="terms"
-                        required>
-
+                    <input type="checkbox" id="terms" required>
                     <label for="terms">
-
-                        I agree to the
-
-                        <a href="#">
-                            Terms & Conditions
-                        </a>
-
+                        I agree to the <a href="#">Terms & Conditions</a>
                     </label>
-
                 </div>
 
-                <button
-                    type="submit"
-                    class="signup-btn">
-
-                    <i class="fas fa-user-plus"></i>
-
-                    Create Account
-
+                <!-- Submit Button -->
+                <button type="submit" class="signup-btn">
+                    <i class="fas fa-user-plus"></i> Create Account
                 </button>
 
                 <div class="divider">
-                    OR
+                    <span>OR</span>
                 </div>
 
-                <button
-                    type="button"
-                    class="google-btn">
-
-                    <i class="fab fa-google"></i>
-
-                    Continue with Google
-
+                <button type="button" class="google-btn">
+                    <i class="fab fa-google"></i> Continue with Google
                 </button>
 
                 <div class="login-link">
-
-                    Already have an account?
-
-                    <a href="login.html">
-                        Login
-                    </a>
-
+                    Already have an account? <a href="login.html">Login</a>
                 </div>
-
             </form>
-
         </div>
-
     </div>
 
+    <!-- SCRIPTS -->
+    <script src="assets/js/db.js"></script>
+    <script src="assets/js/app.js"></script>
     <script>
-
-        window.addEventListener("load",()=>{
-
-            setTimeout(()=>{
-
-                document.getElementById("loader").style.opacity="0";
-
-                setTimeout(()=>{
-
-                    document.getElementById("loader").style.display="none";
-
-                },500);
-
-            },1800);
-
-        });
-
-        const password =
-            document.getElementById("password");
-
-        const togglePassword =
-            document.getElementById("togglePassword");
-
-        togglePassword.addEventListener("click",()=>{
-
-            const type =
-                password.type==="password"
-                ? "text"
-                : "password";
-
-            password.type = type;
-
-            togglePassword.classList.toggle("fa-eye");
-            togglePassword.classList.toggle("fa-eye-slash");
-
-        });
-
-        password.addEventListener("input",()=>{
-
-            const value = password.value;
-
-            const fill =
-                document.getElementById("strengthFill");
-
-            const text =
-                document.getElementById("strengthText");
-
-            if(value.length < 4){
-
-                fill.style.width="25%";
-                fill.style.background="red";
-                text.innerHTML="Weak";
-
-            }
-
-            else if(value.length < 8){
-
-                fill.style.width="60%";
-                fill.style.background="orange";
-                text.innerHTML="Medium";
-
-            }
-
-            else{
-
-                fill.style.width="100%";
-                fill.style.background="green";
-                text.innerHTML="Strong";
-
-            }
-
-        });
-
-        document
-            .getElementById("signupForm")
-            .addEventListener("submit",(e)=>{
-
-                e.preventDefault();
-
-                const name =
-                    document.getElementById("name").value.trim();
-
-                const email =
-                    document.getElementById("email").value.trim().toLowerCase();
-
-                const password =
-                    document.getElementById("password").value;
-
-                const confirm =
-                    document.getElementById("confirmPassword").value;
-
-                if(password !== confirm){
-                    alert("Passwords do not match");
-                    return;
+        // Page entrance loader dismissal
+        window.addEventListener("load", () => {
+            setTimeout(() => {
+                const loader = document.getElementById("loader");
+                if (loader) {
+                    loader.style.opacity = "0";
+                    setTimeout(() => {
+                        loader.style.display = "none";
+                    }, 500);
                 }
+            }, 800);
+        });
 
-                // Check registered users list
-                const users = JSON.parse(localStorage.getItem("finance_users")) || [];
-                
-                const exists = users.some(u => u.email === email);
-                if (exists) {
-                    alert("This email is already registered. Please use another or log in.");
-                    return;
+        // Password visibility toggler
+        const passwordInput = document.getElementById("password");
+        const toggleIcon = document.getElementById("togglePassword");
+
+        toggleIcon.addEventListener("click", () => {
+            const isPassword = passwordInput.type === "password";
+            passwordInput.type = isPassword ? "text" : "password";
+            toggleIcon.classList.toggle("fa-eye", !isPassword);
+            toggleIcon.classList.toggle("fa-eye-slash", isPassword);
+        });
+
+        // Password strength meter logic
+        passwordInput.addEventListener("input", () => {
+            const value = passwordInput.value;
+            const fill = document.getElementById("strengthFill");
+            const text = document.getElementById("strengthText");
+
+            if (value.length === 0) {
+                fill.style.width = "0%";
+                text.innerHTML = "Password Strength";
+                text.style.color = "var(--text-gray)";
+            } else if (value.length < 4) {
+                fill.style.width = "25%";
+                fill.style.background = "var(--danger)";
+                text.innerHTML = "Weak";
+                text.style.color = "var(--danger)";
+            } else if (value.length < 8) {
+                fill.style.width = "60%";
+                fill.style.background = "var(--warning)";
+                text.innerHTML = "Medium";
+                text.style.color = "var(--warning)";
+            } else {
+                fill.style.width = "100%";
+                fill.style.background = "var(--success)";
+                text.innerHTML = "Strong Password";
+                text.style.color = "var(--success)";
+            }
+        });
+
+        // Form Submit Handler
+        document.getElementById("signupForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim().toLowerCase();
+            const password = document.getElementById("password").value;
+            const confirm = document.getElementById("confirmPassword").value;
+
+            if (password !== confirm) {
+                if (window.showNotification) {
+                    window.showNotification("Passwords do not match!", "error");
+                } else {
+                    alert("Passwords do not match!");
                 }
+                return;
+            }
 
-                const user = {
-                    name,
-                    fullName: name,
-                    email,
-                    password
-                };
+            // Retrieve registered users
+            const users = JSON.parse(localStorage.getItem("finance_users")) || [];
+            
+            const exists = users.some(u => u.email === email);
+            if (exists) {
+                if (window.showNotification) {
+                    window.showNotification("This email is already registered!", "error");
+                } else {
+                    alert("This email is already registered!");
+                }
+                return;
+            }
 
-                users.push(user);
-                localStorage.setItem(
-                    "finance_users",
-                    JSON.stringify(users)
-                );
+            const newUser = {
+                name,
+                fullName: name,
+                email,
+                password
+            };
 
-                alert(
-                    "Account Created Successfully!"
-                );
+            users.push(newUser);
+            localStorage.setItem("finance_users", JSON.stringify(users));
 
-                window.location.href =
-                    "login.html";
+            if (window.showNotification) {
+                window.showNotification("Account Created Successfully! Redirecting to login...", "success");
+            } else {
+                alert("Account Created Successfully!");
+            }
 
-            });
-
+            setTimeout(() => {
+                window.location.href = "login.html";
+            }, 1800);
+        });
     </script>
-
 </body>
-
 </html>
