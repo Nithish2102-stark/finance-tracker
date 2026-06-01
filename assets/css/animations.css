@@ -1,0 +1,578 @@
+/* ==========================================
+   GLOBAL TRANSITIONS
+========================================== */
+
+*{
+    transition:
+    background-color .3s ease,
+    color .3s ease,
+    border-color .3s ease,
+    box-shadow .3s ease;
+}
+
+/* ==========================================
+   PAGE FADE IN
+========================================== */
+
+.page-enter{
+    animation:pageFadeIn .8s ease forwards;
+}
+
+@keyframes pageFadeIn{
+
+    from{
+        opacity:0;
+    }
+
+    to{
+        opacity:1;
+    }
+}
+
+/* ==========================================
+   FADE IN
+========================================== */
+
+.fade-in{
+    animation:fadeIn .8s ease forwards;
+}
+
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+    }
+
+    to{
+        opacity:1;
+    }
+}
+
+/* ==========================================
+   SLIDE UP
+========================================== */
+
+.slide-up{
+    animation:slideUp .7s ease forwards;
+}
+
+@keyframes slideUp{
+
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* ==========================================
+   SLIDE DOWN
+========================================== */
+
+.slide-down{
+    animation:slideDown .7s ease forwards;
+}
+
+@keyframes slideDown{
+
+    from{
+        opacity:0;
+        transform:translateY(-40px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* ==========================================
+   SLIDE LEFT
+========================================== */
+
+.slide-left{
+    animation:slideLeft .7s ease forwards;
+}
+
+@keyframes slideLeft{
+
+    from{
+        opacity:0;
+        transform:translateX(60px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateX(0);
+    }
+}
+
+/* ==========================================
+   SLIDE RIGHT
+========================================== */
+
+.slide-right{
+    animation:slideRight .7s ease forwards;
+}
+
+@keyframes slideRight{
+
+    from{
+        opacity:0;
+        transform:translateX(-60px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateX(0);
+    }
+}
+
+/* ==========================================
+   SCALE IN
+========================================== */
+
+.scale-in{
+    animation:scaleIn .5s ease forwards;
+}
+
+@keyframes scaleIn{
+
+    from{
+        opacity:0;
+        transform:scale(.8);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+/* ==========================================
+   ZOOM IN
+========================================== */
+
+.zoom-in{
+    animation:zoomIn .6s ease forwards;
+}
+
+@keyframes zoomIn{
+
+    from{
+        opacity:0;
+        transform:scale(.5);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+/* ==========================================
+   FLOATING EFFECT
+========================================== */
+
+.float{
+    animation:floating 5s ease-in-out infinite;
+}
+
+@keyframes floating{
+
+    0%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-12px);
+    }
+
+    100%{
+        transform:translateY(0);
+    }
+}
+
+/* ==========================================
+   PULSE EFFECT
+========================================== */
+
+.pulse{
+    animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+
+    0%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.05);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+}
+
+/* ==========================================
+   ROTATE
+========================================== */
+
+.rotate{
+    animation:rotate360 2s linear infinite;
+}
+
+@keyframes rotate360{
+
+    from{
+        transform:rotate(0deg);
+    }
+
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+/* ==========================================
+   LOGO SPLASH
+========================================== */
+
+.logo-animation{
+
+    animation:logoIntro 2s ease forwards;
+}
+
+@keyframes logoIntro{
+
+    0%{
+        transform:scale(0);
+        opacity:0;
+    }
+
+    40%{
+        transform:scale(1.3);
+        opacity:1;
+    }
+
+    70%{
+        transform:scale(.95);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+}
+
+/* ==========================================
+   CARD HOVER
+========================================== */
+
+.card-hover{
+
+    transition:.3s ease;
+}
+
+.card-hover:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:
+    0 20px 40px rgba(0,0,0,.12);
+}
+
+/* ==========================================
+   BUTTON HOVER
+========================================== */
+
+.btn-animate{
+
+    transition:.3s ease;
+}
+
+.btn-animate:hover{
+
+    transform:translateY(-3px);
+}
+
+.btn-animate:active{
+
+    transform:scale(.96);
+}
+
+/* ==========================================
+   SIDEBAR ITEM HOVER
+========================================== */
+
+.sidebar-item{
+
+    position:relative;
+    overflow:hidden;
+}
+
+.sidebar-item::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:-100%;
+
+    width:100%;
+    height:100%;
+
+    background:
+    rgba(255,255,255,.15);
+
+    transition:.4s;
+}
+
+.sidebar-item:hover::before{
+
+    left:100%;
+}
+
+/* ==========================================
+   NOTIFICATION BOUNCE
+========================================== */
+
+.bounce{
+
+    animation:bounce 2s infinite;
+}
+
+@keyframes bounce{
+
+    0%,20%,50%,80%,100%{
+
+        transform:translateY(0);
+    }
+
+    40%{
+
+        transform:translateY(-10px);
+    }
+
+    60%{
+
+        transform:translateY(-5px);
+    }
+}
+
+/* ==========================================
+   LOADING SHIMMER
+========================================== */
+
+.shimmer{
+
+    position:relative;
+    overflow:hidden;
+    background:#f1f5f9;
+}
+
+.shimmer::after{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:-150%;
+
+    width:100%;
+    height:100%;
+
+    background:
+    linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.8),
+        transparent
+    );
+
+    animation:shimmer 1.5s infinite;
+}
+
+@keyframes shimmer{
+
+    100%{
+        left:150%;
+    }
+}
+
+/* ==========================================
+   PROGRESS BAR FILL
+========================================== */
+
+.progress-animate{
+
+    animation:progressGrow 1.5s ease;
+}
+
+@keyframes progressGrow{
+
+    from{
+        width:0;
+    }
+}
+
+/* ==========================================
+   MODAL OPEN
+========================================== */
+
+.modal-show{
+
+    animation:modalShow .35s ease forwards;
+}
+
+@keyframes modalShow{
+
+    from{
+
+        opacity:0;
+        transform:scale(.8);
+    }
+
+    to{
+
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+/* ==========================================
+   TABLE ROW HOVER
+========================================== */
+
+.table-hover tbody tr{
+
+    transition:.25s ease;
+}
+
+.table-hover tbody tr:hover{
+
+    background:#f8fafc;
+}
+
+/* ==========================================
+   STAGGER DELAYS
+========================================== */
+
+.delay-1{
+    animation-delay:.1s;
+}
+
+.delay-2{
+    animation-delay:.2s;
+}
+
+.delay-3{
+    animation-delay:.3s;
+}
+
+.delay-4{
+    animation-delay:.4s;
+}
+
+.delay-5{
+    animation-delay:.5s;
+}
+
+.delay-6{
+    animation-delay:.6s;
+}
+
+/* ==========================================
+   DASHBOARD WIDGET POP-IN
+========================================== */
+
+.widget-enter{
+
+    animation:widgetEnter .7s ease forwards;
+}
+
+@keyframes widgetEnter{
+
+    from{
+
+        opacity:0;
+        transform:
+        translateY(30px)
+        scale(.95);
+    }
+
+    to{
+
+        opacity:1;
+        transform:
+        translateY(0)
+        scale(1);
+    }
+}
+
+/* ==========================================
+   SPINNER
+========================================== */
+
+.spinner{
+
+    width:40px;
+    height:40px;
+
+    border:4px solid #e5e7eb;
+
+    border-top-color:#2563eb;
+
+    border-radius:50%;
+
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+
+    from{
+        transform:rotate(0deg);
+    }
+
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+/* ==========================================
+   HEARTBEAT
+========================================== */
+
+.heartbeat{
+
+    animation:heartbeat 1.5s infinite;
+}
+
+@keyframes heartbeat{
+
+    0%{
+        transform:scale(1);
+    }
+
+    25%{
+        transform:scale(1.1);
+    }
+
+    50%{
+        transform:scale(1);
+    }
+
+    75%{
+        transform:scale(1.1);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+}

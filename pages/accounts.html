@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accounts - Finance Tracker</title>
+    
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <!-- Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="app-container page-enter">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div>
+                <div class="logo-section">
+                    <img src="../assets/images/logo.png" alt="Logo">
+                    <h2>Finance Tracker</h2>
+                </div>
+                <ul class="menu">
+                    <li>
+                        <a href="dashboard.html">
+                            <i class="fas fa-chart-pie"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="transactions.html">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>Transactions</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="income.html">
+                            <i class="fas fa-arrow-trend-up"></i>
+                            <span>Income</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="expenses.html">
+                            <i class="fas fa-arrow-trend-down"></i>
+                            <span>Expenses</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="budget.html">
+                            <i class="fas fa-wallet"></i>
+                            <span>Budget</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="accounts.html">
+                            <i class="fas fa-building-columns"></i>
+                            <span>Accounts</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="reports.html">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Reports</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="goals.html">
+                            <i class="fas fa-bullseye"></i>
+                            <span>Goals</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="categories.html">
+                            <i class="fas fa-tags"></i>
+                            <span>Categories</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="settings.html">
+                            <i class="fas fa-gear"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-bottom">
+                <!-- Sidebar Balance Card (shown on Accounts page) -->
+                <div class="sidebar-balance-widget" id="sidebarBalanceWidget">
+                    <div class="widget-title">Total Balance</div>
+                    <div class="widget-val" id="sidebarBalanceVal">$12,450.00</div>
+                    <div class="widget-row">
+                        <span>Income</span>
+                        <span class="positive" id="sidebarIncomeVal">$5,420.00</span>
+                    </div>
+                    <div class="widget-row">
+                        <span>Expenses</span>
+                        <span class="negative" id="sidebarExpenseVal">$2,340.00</span>
+                    </div>
+                </div>
+
+                <!-- Dark Mode Widget -->
+                <div class="dark-mode-widget">
+                    <span>
+                        <i class="fas fa-moon"></i>
+                        <span>Dark Mode</span>
+                    </span>
+                    <label class="switch">
+                        <input type="checkbox" id="darkModeSwitch">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <!-- User Profile Block -->
+                <div class="sidebar-profile">
+                    <div class="profile-info" id="profileButton" onclick="toggleProfileMenu()">
+                        <img src="https://ui-avatars.com/api/?name=Admin+User&background=4f46e5&color=fff" alt="User Avatar" id="profileAvatar">
+                        <div class="profile-meta">
+                            <h4 id="sidebarProfileName">Admin User</h4>
+                            <p id="sidebarProfileEmail">admin@example.com</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-up profile-chevron" onclick="toggleProfileMenu()"></i>
+                    
+                    <!-- Profile Dropdown Menu -->
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <a href="settings.html"><i class="fas fa-user-gear"></i> My Profile</a>
+                        <a href="settings.html"><i class="fas fa-gear"></i> Settings</a>
+                        <a href="#" onclick="logoutUser(); return false;" class="negative"><i class="fas fa-right-from-bracket"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN WINDOW -->
+        <main class="main-content">
+            <!-- TOP BAR -->
+            <header class="topbar">
+                <div class="topbar-title">
+                    <h1>Accounts</h1>
+                    <p>Manage all your accounts in one place.</p>
+                </div>
+                <div class="topbar-actions">
+                    <button class="btn btn-secondary" onclick="exportAccountsCSV()">
+                        <i class="fas fa-file-csv"></i> Export CSV
+                    </button>
+                    <button class="btn btn-primary" onclick="openLinkAccountModal()" style="background: #10b981; border-color: #10b981; color: white;">
+                        <i class="fas fa-link"></i> Link Bank Account
+                    </button>
+                    <button class="btn btn-primary" onclick="openAddAccountModal()">
+                        <i class="fas fa-plus"></i> Add Account
+                    </button>
+                </div>
+            </header>
+
+            <!-- STATS BLOCK -->
+            <section class="stats-grid">
+                <div class="stat-card color-primary">
+                    <div class="icon-box">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <h4>Total Balance</h4>
+                    <h2 id="totalBalanceVal">$12,450.00</h2>
+                    <div style="font-size: 13px; color: var(--text-light); margin-top: 10px;" id="totalAcrossText">Across 4 accounts</div>
+                </div>
+
+                <div class="stat-card color-success">
+                    <div class="icon-box">
+                        <i class="fas fa-building-columns"></i>
+                    </div>
+                    <h4>Total in Bank</h4>
+                    <h2 id="totalBankVal">$9,200.00</h2>
+                    <div style="font-size: 13px; color: var(--text-light); margin-top: 10px;" id="bankAccountsText">3 accounts</div>
+                </div>
+
+                <div class="stat-card color-warning">
+                    <div class="icon-box">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h4>Total in Cash</h4>
+                    <h2 id="totalCashVal">$1,250.00</h2>
+                    <div style="font-size: 13px; color: var(--text-light); margin-top: 10px;" id="cashAccountsText">1 account</div>
+                </div>
+
+                <div class="stat-card color-danger">
+                    <div class="icon-box">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h4>Total Credit</h4>
+                    <h2 id="totalCreditVal">$2,000.00</h2>
+                    <div style="font-size: 13px; color: var(--text-light); margin-top: 10px;" id="creditAccountsText">1 account</div>
+                </div>
+            </section>
+
+            <!-- MAIN GRID -->
+            <section class="main-layout-grid">
+                <!-- Left area: Accounts ledger table -->
+                <div class="content-card">
+                    <div class="content-card-header">
+                        <h3>All Accounts</h3>
+                    </div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Account</th>
+                                    <th>Type</th>
+                                    <th>Bank / Provider</th>
+                                    <th>Balance</th>
+                                    <th>Status</th>
+                                    <th style="text-align: right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="accountsTableBody">
+                                <!-- Loaded dynamically via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Add account inline link matching screenshot -->
+                    <div style="text-align: center; margin-top: 20px; border-top: 1px dashed var(--border); padding-top: 15px;">
+                        <a href="#" onclick="openAddAccountModal(); return false;" style="color: var(--primary); font-weight: 600; font-size: 14px; display: inline-flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-plus"></i> Add New Account
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right area: Analytics side panel -->
+                <div>
+                    <!-- Account Summary doughnut chart -->
+                    <div class="content-card">
+                        <div class="content-card-header">
+                            <h3>Account Summary</h3>
+                        </div>
+                        <div style="height: 220px; position: relative;">
+                            <canvas id="accountsDoughnutChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Balance Over Time area chart -->
+                    <div class="content-card">
+                        <div class="content-card-header">
+                            <h3>Balance Over Time</h3>
+                        </div>
+                        <div style="height: 180px; position: relative;">
+                            <canvas id="accountsHistoryChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Recent Account Activity list -->
+                    <div class="content-card">
+                        <div class="content-card-header">
+                            <h3>Recent Account Activity</h3>
+                        </div>
+                        <div class="activity-feed-list" id="accountActivityFeed">
+                            <!-- Loaded dynamically via JS -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- ADD ACCOUNT MODAL -->
+    <div class="modal" id="accountModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="accountModalTitle">Add Account</h3>
+                <button class="close-modal" onclick="closeModal('accountModal')"><i class="fas fa-xmark"></i></button>
+            </div>
+            <form id="accountForm">
+                <input type="hidden" id="editAccountId">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="accName">Account Name</label>
+                            <input type="text" id="accName" class="form-control" placeholder="e.g. KVB Savings" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="accHolderName">Account Holder Name</label>
+                            <input type="text" id="accHolderName" class="form-control" placeholder="e.g. Nithish Kumar" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="accType">Type</label>
+                            <select id="accType" class="form-control" required>
+                                <option value="Bank">Bank</option>
+                                <option value="Cash">Cash</option>
+                                <option value="Credit">Credit</option>
+                                <option value="Investment">Investment</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="accProvider">Bank Name</label>
+                            <select id="accProvider" class="form-control" required>
+                                <option value="State Bank of India">State Bank of India (SBI)</option>
+                                <option value="Bank of Baroda">Bank of Baroda</option>
+                                <option value="Indian Overseas Bank">Indian Overseas Bank (IOB)</option>
+                                <option value="Canara Bank">Canara Bank</option>
+                                <option value="ICICI Bank">ICICI Bank</option>
+                                <option value="Karur Vysya Bank">Karur Vysya Bank (KVB)</option>
+                                <option value="HDFC Bank">HDFC Bank</option>
+                                <option value="Axis Bank">Axis Bank</option>
+                                <option value="Other Bank">Other Bank</option>
+                                <option value="—">— (Non-Bank / Cash)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="accNumber">Account Number (Full or Last 4 digits)</label>
+                            <input type="text" id="accNumber" class="form-control" placeholder="e.g. 30492810923" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="accBalance">Opening Balance (₹ / $)</label>
+                            <input type="number" step="0.01" id="accBalance" class="form-control" placeholder="0.00" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="accIfsc">IFSC Code</label>
+                            <input type="text" id="accIfsc" class="form-control" placeholder="e.g. SBIN0001234">
+                        </div>
+                        <div class="form-group">
+                            <label for="accBranch">Branch Name</label>
+                            <input type="text" id="accBranch" class="form-control" placeholder="e.g. Chennai Main">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('accountModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Account</button>
+                </div>
+            </form>
+        </div>
+    </div><!-- LINK BANK ACCOUNT MODAL -->
+    <div class="modal" id="linkAccountModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Link Bank Account</h3>
+                <button class="close-modal" onclick="closeLinkAccountModal()"><i class="fas fa-xmark"></i></button>
+            </div>
+            <form id="linkAccountForm">
+                <div class="modal-body">
+                    <div style="background: var(--primary-light); color: var(--primary); padding: 12px; border-radius: 10px; margin-bottom: 15px; font-size: 13px; line-height: 1.4; display: flex; gap: 8px; align-items: flex-start;">
+                        <i class="fas fa-circle-info" style="margin-top: 2px;"></i>
+                        <div>
+                            <strong>Demo Sync Mode:</strong> Choose any Indian bank and input your account details. Clicking Connect will simulate a secure OTP verification sync and retrieve recent transactions straight into your ledger!
+                        </div>
+                    </div>
+                    
+                    <div id="linkFormFields">
+                        <div class="form-row">
+                            <div class="form-group" id="linkHolderNameGroup">
+                                <label for="linkHolderName">Account Holder Name</label>
+                                <input type="text" id="linkHolderName" class="form-control" placeholder="e.g. Nithish Kumar" required>
+                            </div>
+                            <div class="form-group" id="linkBankGroup">
+                                <label for="linkBank">Select Bank Name</label>
+                                <select id="linkBank" class="form-control" required>
+                                    <option value="State Bank of India">State Bank of India (SBI)</option>
+                                    <option value="Bank of Baroda">Bank of Baroda</option>
+                                    <option value="Indian Overseas Bank">Indian Overseas Bank (IOB)</option>
+                                    <option value="Canara Bank">Canara Bank</option>
+                                    <option value="ICICI Bank">ICICI Bank</option>
+                                    <option value="Karur Vysya Bank">Karur Vysya Bank (KVB)</option>
+                                    <option value="HDFC Bank">HDFC Bank</option>
+                                    <option value="Axis Bank">Axis Bank</option>
+                                    <option value="Other Bank">Other Indian Bank</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group" id="linkAccountNumberGroup">
+                                <label for="linkAccountNumber">Account Number</label>
+                                <input type="text" id="linkAccountNumber" class="form-control" placeholder="e.g. 30291812903" required>
+                            </div>
+                            <div class="form-group" id="linkBalanceGroup">
+                                <label for="linkBalance">Current Balance (₹ / $)</label>
+                                <input type="number" step="0.01" id="linkBalance" class="form-control" placeholder="0.00" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group" id="linkIfscCodeGroup">
+                                <label for="linkIfscCode">IFSC Code</label>
+                                <input type="text" id="linkIfscCode" class="form-control" placeholder="e.g. KVBL0001045" required>
+                            </div>
+                            <div class="form-group" id="linkBranchGroup">
+                                <label for="linkBranch">Branch Name</label>
+                                <input type="text" id="linkBranch" class="form-control" placeholder="e.g. Chennai Main" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="linkPinGroup">
+                            <label for="linkPin">Netbanking PIN / UPI OTP (Simulated)</label>
+                            <input type="password" id="linkPin" class="form-control" placeholder="Enter secure PIN or OTP" required>
+                        </div>
+                    </div>
+
+                    <!-- Sync Spinner Container -->
+                    <div id="bankSyncSpinner" style="display: none; text-align: center; padding: 20px 0;">
+                        <i class="fas fa-circle-notch fa-spin fa-3x" style="color: var(--primary); margin-bottom: 12px;"></i>
+                        <h4 style="font-weight: 600; color: var(--text);">Establishing Secure Sync...</h4>
+                        <p style="font-size: 13px; color: var(--text-light); margin-top: 5px;">Validating OTP credentials and downloading statements...</p>
+                    </div>
+                </div>
+                <div class="modal-footer" id="linkModalFooter">
+                    <button type="button" class="btn btn-secondary" onclick="closeLinkAccountModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary" style="background: #10b981; border-color: #10b981; color: white;">
+                        <i class="fas fa-lock"></i> Connect & Sync
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="../assets/js/db.js"></script>
+    <script src="../assets/js/app.js"></script>
+    <script src="../assets/js/accounts.js"></script>
+</body>
+</html>

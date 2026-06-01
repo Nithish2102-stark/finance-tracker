@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Finance Tracker</title>
+    
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <!-- Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="app-container page-enter">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div>
+                <div class="logo-section">
+                    <img src="../assets/images/logo.png" alt="Logo">
+                    <h2>Finance Tracker</h2>
+                </div>
+                <ul class="menu">
+                    <li>
+                        <a href="dashboard.html">
+                            <i class="fas fa-chart-pie"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="transactions.html">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>Transactions</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="income.html">
+                            <i class="fas fa-arrow-trend-up"></i>
+                            <span>Income</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="expenses.html">
+                            <i class="fas fa-arrow-trend-down"></i>
+                            <span>Expenses</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="budget.html">
+                            <i class="fas fa-wallet"></i>
+                            <span>Budget</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="accounts.html">
+                            <i class="fas fa-building-columns"></i>
+                            <span>Accounts</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="reports.html">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Reports</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="goals.html">
+                            <i class="fas fa-bullseye"></i>
+                            <span>Goals</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="categories.html">
+                            <i class="fas fa-tags"></i>
+                            <span>Categories</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="settings.html">
+                            <i class="fas fa-gear"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-bottom">
+                <!-- Premium Banner (shown on Dashboard page) -->
+                <div class="sidebar-premium-widget" id="sidebarPremiumWidget">
+                    <i class="fas fa-crown premium-crown"></i>
+                    <h4>Go Premium</h4>
+                    <p>Unlock advanced reports, unlimited accounts and more.</p>
+                    <button class="upgrade-btn">Upgrade Now</button>
+                </div>
+
+                <!-- Dark Mode Widget -->
+                <div class="dark-mode-widget">
+                    <span>
+                        <i class="fas fa-moon"></i>
+                        <span>Dark Mode</span>
+                    </span>
+                    <label class="switch">
+                        <input type="checkbox" id="darkModeSwitch">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <!-- User Profile Block -->
+                <div class="sidebar-profile">
+                    <div class="profile-info" id="profileButton" onclick="toggleProfileMenu()">
+                        <img src="https://ui-avatars.com/api/?name=Admin+User&background=4f46e5&color=fff" alt="User Avatar" id="profileAvatar">
+                        <div class="profile-meta">
+                            <h4 id="sidebarProfileName">Admin User</h4>
+                            <p id="sidebarProfileEmail">admin@example.com</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-up profile-chevron" onclick="toggleProfileMenu()"></i>
+                    
+                    <!-- Profile Dropdown Menu -->
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <a href="settings.html"><i class="fas fa-user-gear"></i> My Profile</a>
+                        <a href="settings.html"><i class="fas fa-gear"></i> Settings</a>
+                        <a href="#" onclick="logoutUser(); return false;" class="negative"><i class="fas fa-right-from-bracket"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN WINDOW -->
+        <main class="main-content">
+            <!-- TOP BAR -->
+            <header class="topbar">
+                <div class="topbar-title">
+                    <h1>Dashboard</h1>
+                    <p>Overview of your finances</p>
+                </div>
+                <div class="topbar-actions">
+                    <div class="btn btn-secondary">
+                        <i class="fas fa-calendar-days"></i>
+                        <span>May 1 – May 31, 2024</span>
+                    </div>
+                    <button class="btn btn-icon">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                    <button class="btn btn-primary" onclick="openModal('addTxModal')">
+                        <i class="fas fa-plus"></i> Add Transaction
+                    </button>
+                    <button class="btn btn-danger" onclick="openExpenseModal()">
+                        <i class="fas fa-plus"></i> Add Expense
+                    </button>
+                </div>
+            </header>
+
+            <!-- STATS BLOCK -->
+            <section class="stats-grid">
+                <div class="stat-card color-success">
+                    <div class="icon-box">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <h4>Total Income</h4>
+                    <h2 id="dashboardIncomeVal">$5,420.00</h2>
+                    <div class="change-indicator positive">
+                        <i class="fas fa-arrow-up"></i> 12.5% <span style="font-weight: normal; color: var(--text-light)">from last month</span>
+                    </div>
+                </div>
+
+                <div class="stat-card color-danger">
+                    <div class="icon-box">
+                        <i class="fas fa-arrow-trend-down"></i>
+                    </div>
+                    <h4>Total Expenses</h4>
+                    <h2 id="dashboardExpenseVal">$2,340.00</h2>
+                    <div class="change-indicator positive">
+                        <i class="fas fa-arrow-up"></i> 8.3% <span style="font-weight: normal; color: var(--text-light)">from last month</span>
+                    </div>
+                </div>
+
+                <div class="stat-card color-primary">
+                    <div class="icon-box">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4>Net Savings</h4>
+                    <h2 id="dashboardSavingsVal">$3,080.00</h2>
+                    <div class="change-indicator positive">
+                        <i class="fas fa-arrow-up"></i> 18.7% <span style="font-weight: normal; color: var(--text-light)">from last month</span>
+                    </div>
+                </div>
+
+                <div class="stat-card color-warning">
+                    <div class="icon-box">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <h4>Total Balance</h4>
+                    <h2 id="dashboardBalanceVal">$12,450.00</h2>
+                    <div class="change-indicator positive">
+                        <i class="fas fa-arrow-up"></i> 15.4% <span style="font-weight: normal; color: var(--text-light)">from last month</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MIDDLE CHART ROW -->
+            <section class="main-layout-grid">
+                <!-- Left area: Cash Flow overview line chart -->
+                <div class="content-card">
+                    <div class="content-card-header">
+                        <h3>Cash Flow Overview</h3>
+                        <select class="btn btn-secondary" style="padding: 6px 12px; font-size: 13px;" id="cashFlowPeriod">
+                            <option>This Month</option>
+                            <option>Last 3 Months</option>
+                        </select>
+                    </div>
+                    <div style="height: 320px; position: relative;">
+                        <canvas id="cashFlowChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Right area: Spending Breakdown doughnut chart -->
+                <div class="content-card">
+                    <div class="content-card-header">
+                        <h3>Spending Overview</h3>
+                        <select class="btn btn-secondary" style="padding: 6px 12px; font-size: 13px;" id="spendingPeriod">
+                            <option>This Month</option>
+                            <option>Last Month</option>
+                        </select>
+                    </div>
+                    <div style="height: 320px; position: relative; display: flex; align-items: center; justify-content: center;">
+                        <canvas id="spendingDoughnutChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- THREE COLUMNS DETAIL LAYOUT (BOTTOM ROW) -->
+            <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px;">
+                <!-- Recent Transactions card -->
+                <div class="content-card" style="margin-bottom: 0;">
+                    <div class="content-card-header">
+                        <h3>Recent Transactions</h3>
+                        <a href="transactions.html" class="header-link">View All</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table style="width: 100%;">
+                            <tbody id="recentTransactionsList">
+                                <!-- Loaded dynamically via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Budget Overview card -->
+                <div class="content-card" style="margin-bottom: 0;">
+                    <div class="content-card-header">
+                        <h3>Budget Overview</h3>
+                        <a href="budget.html" class="header-link">View All</a>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 20px;" id="budgetListOverview">
+                        <!-- Loaded dynamically via JS -->
+                    </div>
+                </div>
+
+                <!-- Financial Goals progress card -->
+                <div class="content-card" style="margin-bottom: 0;">
+                    <div class="content-card-header">
+                        <h3>Financial Goals</h3>
+                        <a href="goals.html" class="header-link">View All</a>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 20px;" id="goalsListOverview">
+                        <!-- Loaded dynamically via JS -->
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- ADD TRANSACTION MODAL -->
+    <div class="modal" id="addTxModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Add Transaction</h3>
+                <button class="close-modal" onclick="closeModal('addTxModal')"><i class="fas fa-xmark"></i></button>
+            </div>
+            <form id="addTransactionForm">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="txDescription">Description</label>
+                        <input type="text" id="txDescription" class="form-control" placeholder="e.g. Walmart Groceries" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="txType">Type</label>
+                            <select id="txType" class="form-control" required onchange="loadCategoryDropdown()">
+                                <option value="Expense">Expense</option>
+                                <option value="Income">Income</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="txCategory">Category</label>
+                            <select id="txCategory" class="form-control" required>
+                                <!-- Loaded dynamically -->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="txAmount">Amount ($)</label>
+                            <input type="number" step="0.01" id="txAmount" class="form-control" placeholder="0.00" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="txDate">Date</label>
+                            <input type="date" id="txDate" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="txAccount" style="display: flex; justify-content: space-between; align-items: center;">
+                                <span>Account</span>
+                                <a href="accounts.html?link=true" style="font-size: 11px; color: var(--primary); font-weight: 600; text-decoration: none;">
+                                    <i class="fas fa-link"></i> Link Bank
+                                </a>
+                            </label>
+                            <select id="txAccount" class="form-control" required>
+                                <!-- Loaded dynamically -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="txMethod">Payment Method</label>
+                            <select id="txMethod" class="form-control" required>
+                                <option value="Credit Card">Credit Card</option>
+                                <option value="Debit Card">Debit Card</option>
+                                <option value="UPI">UPI</option>
+                                <option value="Bank Transfer">Bank Transfer</option>
+                                <option value="Cash">Cash</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('addTxModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Transaction</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="../assets/js/db.js"></script>
+    <script src="../assets/js/app.js"></script>
+    <script src="../assets/js/dashboard.js"></script>
+</body>
+</html>

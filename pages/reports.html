@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports - Finance Tracker</title>
+    
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <!-- Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="app-container page-enter">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div>
+                <div class="logo-section">
+                    <img src="../assets/images/logo.png" alt="Logo">
+                    <h2>Finance Tracker</h2>
+                </div>
+                <ul class="menu">
+                    <li>
+                        <a href="dashboard.html">
+                            <i class="fas fa-chart-pie"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="transactions.html">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>Transactions</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="income.html">
+                            <i class="fas fa-arrow-trend-up"></i>
+                            <span>Income</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="expenses.html">
+                            <i class="fas fa-arrow-trend-down"></i>
+                            <span>Expenses</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="budget.html">
+                            <i class="fas fa-wallet"></i>
+                            <span>Budget</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="accounts.html">
+                            <i class="fas fa-building-columns"></i>
+                            <span>Accounts</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="reports.html">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Reports</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="goals.html">
+                            <i class="fas fa-bullseye"></i>
+                            <span>Goals</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="categories.html">
+                            <i class="fas fa-tags"></i>
+                            <span>Categories</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="settings.html">
+                            <i class="fas fa-gear"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-bottom">
+                <!-- Sidebar Balance Card -->
+                <div class="sidebar-balance-widget" id="sidebarBalanceWidget">
+                    <div class="widget-title">Total Balance</div>
+                    <div class="widget-val" id="sidebarBalanceVal">$12,450.00</div>
+                    <div class="widget-row">
+                        <span>Income</span>
+                        <span class="positive" id="sidebarIncomeVal">$5,420.00</span>
+                    </div>
+                    <div class="widget-row">
+                        <span>Expenses</span>
+                        <span class="negative" id="sidebarExpenseVal">$2,340.00</span>
+                    </div>
+                </div>
+
+                <!-- Dark Mode Widget -->
+                <div class="dark-mode-widget">
+                    <span>
+                        <i class="fas fa-moon"></i>
+                        <span>Dark Mode</span>
+                    </span>
+                    <label class="switch">
+                        <input type="checkbox" id="darkModeSwitch">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <!-- User Profile Block -->
+                <div class="sidebar-profile">
+                    <div class="profile-info" id="profileButton" onclick="toggleProfileMenu()">
+                        <img src="https://ui-avatars.com/api/?name=Admin+User&background=4f46e5&color=fff" alt="User Avatar" id="profileAvatar">
+                        <div class="profile-meta">
+                            <h4 id="sidebarProfileName">Admin User</h4>
+                            <p id="sidebarProfileEmail">admin@example.com</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-up profile-chevron" onclick="toggleProfileMenu()"></i>
+                    
+                    <!-- Profile Dropdown Menu -->
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <a href="settings.html"><i class="fas fa-user-gear"></i> My Profile</a>
+                        <a href="settings.html"><i class="fas fa-gear"></i> Settings</a>
+                        <a href="#" onclick="logoutUser(); return false;" class="negative"><i class="fas fa-right-from-bracket"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN WINDOW -->
+        <main class="main-content">
+            <!-- TOP BAR -->
+            <header class="topbar">
+                <div class="topbar-title">
+                    <h1>Reports</h1>
+                    <p>Analyze your financial performance and trends.</p>
+                </div>
+            </header>
+
+            <!-- STATS BLOCK -->
+            <section class="stats-grid">
+                <div class="stat-card color-success">
+                    <div class="icon-box">
+                        <i class="fas fa-arrow-trend-up"></i>
+                    </div>
+                    <h4>Total Income</h4>
+                    <h2 id="reportIncomeVal">$5,420.00</h2>
+                    <div style="font-size: 13px; color: var(--text-light); margin-top: 10px;">Sum of all inflows</div>
+                </div>
+
+                <div class="stat-card color-danger">
+                    <div class="icon-box">
+                        <i class="fas fa-arrow-trend-down"></i>
+                    </div>
+                    <h4>Total Expenses</h4>
+                    <h2 id="reportExpenseVal">$2,340.00</h2>
+                    <div style="font-size: 13px; color: var(--text-light); margin-top: 10px;">Sum of all outflows</div>
+                </div>
+
+                <div class="stat-card color-primary">
+                    <div class="icon-box">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h4>Net Profit</h4>
+                    <h2 id="reportProfitVal">$3,080.00</h2>
+                    <div style="font-size: 13px; color: var(--text-light); margin-top: 10px;">Net financial savings</div>
+                </div>
+            </section>
+
+            <!-- DATE FILTER -->
+            <section class="content-card">
+                <div class="content-card-header">
+                    <h3>Filter Reports</h3>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="reportStartDate">Start Date</label>
+                        <input type="date" id="reportStartDate" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="reportEndDate">End Date</label>
+                        <input type="date" id="reportEndDate" class="form-control">
+                    </div>
+                </div>
+                <div style="display: flex; gap: 12px; margin-top: 10px;">
+                    <button id="applyReportFilter" class="btn btn-primary">Apply Filter</button>
+                    <button id="resetReportFilter" class="btn btn-secondary">Reset</button>
+                </div>
+            </section>
+
+            <!-- MAIN GRID Layout -->
+            <section class="main-layout-grid">
+                <!-- Left area: Income vs Expenses graph -->
+                <div class="content-card">
+                    <div class="content-card-header">
+                        <h3>Income vs Expenses Comparison</h3>
+                    </div>
+                    <div style="height: 350px; position: relative;">
+                        <canvas id="reportChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Right area: Categories table breakdowns -->
+                <div class="content-card">
+                    <div class="content-card-header">
+                        <h3>Expense Breakdown</h3>
+                    </div>
+                    <div class="table-responsive" style="max-height: 350px; overflow-y: auto;">
+                        <table style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th style="text-align: right;">Total Spent</th>
+                                </tr>
+                            </thead>
+                            <tbody id="categoryReportBody">
+                                <!-- Loaded dynamically via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MONTHLY SUMMARY GRID -->
+            <section class="content-card">
+                <div class="content-card-header">
+                    <h3>Monthly Financial Summary</h3>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Month</th>
+                                <th>Income</th>
+                                <th>Expenses</th>
+                                <th>Net Savings</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="monthlyReportBody">
+                            <!-- Loaded dynamically via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- DATA EXPORTS -->
+            <section class="content-card">
+                <div class="content-card-header">
+                    <h3>Export Reports</h3>
+                </div>
+                <p style="font-size: 14px; color: var(--text-light); margin-bottom: 20px;">Download your ledger statements and accounting files for reference.</p>
+                <div style="display: flex; gap: 12px;">
+                    <button id="exportCSVBtn" class="btn btn-success">
+                        <i class="fas fa-file-csv"></i> Export CSV Statement
+                    </button>
+                    <button id="exportJSONBtn" class="btn btn-primary">
+                        <i class="fas fa-file-code"></i> Export JSON Backup
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="../assets/js/db.js"></script>
+    <script src="../assets/js/app.js"></script>
+    <script src="../assets/js/reports.js"></script>
+</body>
+</html>

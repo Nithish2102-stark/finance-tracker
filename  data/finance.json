@@ -1,0 +1,148 @@
+{
+  "user": {
+    "id": 1,
+    "name": "Finance User",
+    "email": "user@example.com",
+    "phone": "+91 9876543210",
+    "currency": "INR"
+  },
+
+  "accounts": [
+    {
+      "id": 1,
+      "name": "HDFC Savings Account",
+      "type": "Bank",
+      "balance": 45000
+    },
+    {
+      "id": 2,
+      "name": "ICICI Current Account",
+      "type": "Bank",
+      "balance": 25000
+    },
+    {
+      "id": 3,
+      "name": "Cash Wallet",
+      "type": "Cash",
+      "balance": 5000
+    }
+  ],
+
+  "income": [
+    {
+      "id": 1,
+      "source": "Monthly Salary",
+      "category": "Salary",
+      "amount": 50000,
+      "date": "2026-05-30"
+    },
+    {
+      "id": 2,
+      "source": "Freelance Project",
+      "category": "Freelance",
+      "amount": 15000,
+      "date": "2026-05-25"
+    }
+  ],
+
+  "expenses": [
+    {
+      "id": 1,
+      "title": "Groceries",
+      "category": "Food",
+      "amount": 3500,
+      "date": "2026-05-28"
+    },
+    {
+      "id": 2,
+      "title": "Electricity Bill",
+      "category": "Bills",
+      "amount": 2400,
+      "date": "2026-05-25"
+    },
+    {
+      "id": 3,
+      "title": "Petrol",
+      "category": "Transportation",
+      "amount": 3000,
+      "date": "2026-05-20"
+    }
+  ],
+
+  "transactions": [
+    {
+      "id": 1,
+      "description": "Monthly Salary",
+      "category": "Salary",
+      "type": "Income",
+      "amount": 50000,
+      "date": "2026-05-30"
+    },
+    {
+      "id": 2,
+      "description": "Groceries",
+      "category": "Food",
+      "type": "Expense",
+      "amount": 3500,
+      "date": "2026-05-28"
+    },
+    {
+      "id": 3,
+      "description": "Freelance Project",
+      "category": "Freelance",
+      "type": "Income",
+      "amount": 15000,
+      "date": "2026-05-25"
+    }
+  ],
+
+  "budgets": [
+    {
+      "id": 1,
+      "category": "Food",
+      "budgetAmount": 10000,
+      "spentAmount": 6500
+    },
+    {
+      "id": 2,
+      "category": "Transportation",
+      "budgetAmount": 5000,
+      "spentAmount": 3200
+    },
+    {
+      "id": 3,
+      "category": "Entertainment",
+      "budgetAmount": 7000,
+      "spentAmount": 4200
+    }
+  ],
+
+  "goals": [
+    {
+      "id": 1,
+      "name": "Emergency Fund",
+      "target": 100000,
+      "saved": 75000,
+      "deadline": "2026-12-31"
+    },
+    {
+      "id": 2,
+      "name": "New Laptop",
+      "target": 120000,
+      "saved": 45000,
+      "deadline": "2026-10-15"
+    }
+  ],
+
+  "reports": {
+    "totalIncome": 65000,
+    "totalExpenses": 8900,
+    "netProfit": 56100
+  },
+
+  "settings": {
+    "theme": "light",
+    "notifications": true,
+    "language": "English"
+  }
+}

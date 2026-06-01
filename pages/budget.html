@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budgets - Finance Tracker</title>
+    
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <!-- Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="app-container page-enter">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div>
+                <div class="logo-section">
+                    <img src="../assets/images/logo.png" alt="Logo">
+                    <h2>Finance Tracker</h2>
+                </div>
+                <ul class="menu">
+                    <li>
+                        <a href="dashboard.html">
+                            <i class="fas fa-chart-pie"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="transactions.html">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>Transactions</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="income.html">
+                            <i class="fas fa-arrow-trend-up"></i>
+                            <span>Income</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="expenses.html">
+                            <i class="fas fa-arrow-trend-down"></i>
+                            <span>Expenses</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="budget.html">
+                            <i class="fas fa-wallet"></i>
+                            <span>Budget</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="accounts.html">
+                            <i class="fas fa-building-columns"></i>
+                            <span>Accounts</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="reports.html">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Reports</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="goals.html">
+                            <i class="fas fa-bullseye"></i>
+                            <span>Goals</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="categories.html">
+                            <i class="fas fa-tags"></i>
+                            <span>Categories</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="settings.html">
+                            <i class="fas fa-gear"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-bottom">
+                <!-- Sidebar Balance Card -->
+                <div class="sidebar-balance-widget" id="sidebarBalanceWidget">
+                    <div class="widget-title">Total Balance</div>
+                    <div class="widget-val" id="sidebarBalanceVal">$12,450.00</div>
+                    <div class="widget-row">
+                        <span>Income</span>
+                        <span class="positive" id="sidebarIncomeVal">$5,420.00</span>
+                    </div>
+                    <div class="widget-row">
+                        <span>Expenses</span>
+                        <span class="negative" id="sidebarExpenseVal">$2,340.00</span>
+                    </div>
+                </div>
+
+                <!-- Dark Mode Widget -->
+                <div class="dark-mode-widget">
+                    <span>
+                        <i class="fas fa-moon"></i>
+                        <span>Dark Mode</span>
+                    </span>
+                    <label class="switch">
+                        <input type="checkbox" id="darkModeSwitch">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <!-- User Profile Block -->
+                <div class="sidebar-profile">
+                    <div class="profile-info" id="profileButton" onclick="toggleProfileMenu()">
+                        <img src="https://ui-avatars.com/api/?name=Admin+User&background=4f46e5&color=fff" alt="User Avatar" id="profileAvatar">
+                        <div class="profile-meta">
+                            <h4 id="sidebarProfileName">Admin User</h4>
+                            <p id="sidebarProfileEmail">admin@example.com</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-up profile-chevron" onclick="toggleProfileMenu()"></i>
+                    
+                    <!-- Profile Dropdown Menu -->
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <a href="settings.html"><i class="fas fa-user-gear"></i> My Profile</a>
+                        <a href="settings.html"><i class="fas fa-gear"></i> Settings</a>
+                        <a href="#" onclick="logoutUser(); return false;" class="negative"><i class="fas fa-right-from-bracket"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN WINDOW -->
+        <main class="main-content">
+            <!-- TOP BAR -->
+            <header class="topbar">
+                <div class="topbar-title">
+                    <h1>Budget</h1>
+                    <p>Plan your spending and track your budget.</p>
+                </div>
+                <div class="topbar-actions">
+                    <button class="btn btn-secondary" onclick="exportBudgetsCSV()">
+                        <i class="fas fa-file-csv"></i> Export CSV
+                    </button>
+                    <button class="btn btn-primary" onclick="openAddBudgetModal()">
+                        <i class="fas fa-plus"></i> Create Budget
+                    </button>
+                </div>
+            </header>
+
+            <!-- STATS BLOCK -->
+            <section class="stats-grid">
+                <div class="stat-card color-primary">
+                    <div class="icon-box">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <h4>Total Budget</h4>
+                    <h2 id="totalBudgetVal">$2,000.00</h2>
+                    <div style="font-size: 13px; color: var(--text-light); margin-top: 10px;">This Month</div>
+                </div>
+
+                <div class="stat-card color-danger">
+                    <div class="icon-box">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <h4>Total Spent</h4>
+                    <h2 id="totalSpentVal">$1,450.00</h2>
+                    <div style="font-size: 13px; color: var(--text-light); margin-top: 10px;">This Month</div>
+                </div>
+
+                <div class="stat-card color-warning">
+                    <div class="icon-box">
+                        <i class="fas fa-hourglass-half"></i>
+                    </div>
+                    <h4>Remaining</h4>
+                    <h2 id="totalRemainingVal">$550.00</h2>
+                    <div style="font-size: 13px; color: var(--text-light); margin-top: 10px;">This Month</div>
+                </div>
+
+                <div class="stat-card color-purple">
+                    <div class="icon-box">
+                        <i class="fas fa-percent"></i>
+                    </div>
+                    <h4>Budget Used</h4>
+                    <h2 id="budgetUsedVal">72.5%</h2>
+                    <div style="font-size: 13px; color: var(--text-light); margin-top: 10px;">This Month</div>
+                </div>
+            </section>
+
+            <!-- MAIN GRID -->
+            <section class="main-layout-grid">
+                <!-- Left area: Budget categories limit table -->
+                <div class="content-card">
+                    <!-- Filters row matching screenshot -->
+                    <div class="filter-toolbar">
+                        <div class="filter-left">
+                            <div class="btn btn-secondary">
+                                <i class="fas fa-calendar-days"></i>
+                                <span>May 1 – May 31, 2024</span>
+                            </div>
+                            <select class="btn btn-secondary" style="padding: 10px 14px;" id="budgetCategoryFilter" onchange="renderBudgetsList()">
+                                <option value="All">All Categories</option>
+                                <option value="Food & Dining">Food & Dining</option>
+                                <option value="Transport">Transport</option>
+                                <option value="Housing">Housing</option>
+                                <option value="Utilities">Utilities</option>
+                                <option value="Entertainment">Entertainment</option>
+                                <option value="Shopping">Shopping</option>
+                                <option value="Others">Others</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-secondary" onclick="openAddBudgetModal()">
+                            <i class="fas fa-pen-to-square"></i> Edit Budget
+                        </button>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Budget</th>
+                                    <th>Spent</th>
+                                    <th>Remaining</th>
+                                    <th style="width: 250px;">Progress</th>
+                                    <th style="text-align: right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="budgetsTableBody">
+                                <!-- Loaded dynamically via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Right area: Analytics & tips side panel -->
+                <div>
+                    <!-- Budget Summary box matching screenshot -->
+                    <div class="content-card">
+                        <div class="content-card-header">
+                            <h3>Budget Summary</h3>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 14px; font-size: 14px;">
+                            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+                                <span style="color: var(--text-light)">Total Budget</span>
+                                <span style="font-weight: 700; color: var(--primary)" id="summaryTotalBudget">$2,000.00</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+                                <span style="color: var(--text-light)">Total Spent</span>
+                                <span style="font-weight: 700; color: var(--danger)" id="summaryTotalSpent">$1,450.09</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+                                <span style="color: var(--text-light)">Remaining</span>
+                                <span style="font-weight: 700; color: var(--success)" id="summaryTotalRemaining">$549.91</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; padding-bottom: 4px;">
+                                <span style="color: var(--text-light)">Budget Used</span>
+                                <span style="font-weight: 700;" id="summaryBudgetUsed">72.5%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Budget by Category doughnut chart -->
+                    <div class="content-card">
+                        <div class="content-card-header">
+                            <h3>Budget by Category</h3>
+                        </div>
+                        <div style="height: 220px; position: relative;">
+                            <canvas id="budgetBreakdownChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Tips card -->
+                    <div class="content-card" style="background: var(--primary-light); border-color: var(--primary); color: var(--text);">
+                        <div style="display: flex; gap: 10px; font-size: 14px; line-height: 1.5;">
+                            <i class="fas fa-lightbulb" style="color: var(--primary); font-size: 18px; margin-top: 2px;"></i>
+                            <div>
+                                <h4 style="font-weight: 700; margin-bottom: 6px; color: var(--primary);">Tips</h4>
+                                <p style="font-size: 13px; color: var(--text-light)">Keep your spending under budget in each category to stay on track with your financial goals.</p>
+                                <a href="reports.html" style="color: var(--primary); font-weight: 600; display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; font-size: 13px;">
+                                    View Reports <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- CREATE/EDIT BUDGET MODAL -->
+    <div class="modal" id="budgetModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="budgetModalTitle">Create Budget Limit</h3>
+                <button class="close-modal" onclick="closeModal('budgetModal')"><i class="fas fa-xmark"></i></button>
+            </div>
+            <form id="budgetForm">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="budgetCategory">Budget Category</label>
+                        <select id="budgetCategory" class="form-control" required>
+                            <option value="">Select Category</option>
+                            <option value="Food & Dining">Food & Dining</option>
+                            <option value="Transport">Transport</option>
+                            <option value="Housing">Housing</option>
+                            <option value="Utilities">Utilities</option>
+                            <option value="Entertainment">Entertainment</option>
+                            <option value="Shopping">Shopping</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="budgetAmount">Monthly Budget Limit ($)</label>
+                        <input type="number" step="0.01" id="budgetAmount" class="form-control" placeholder="e.g. 500" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('budgetModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Budget</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="../assets/js/db.js"></script>
+    <script src="../assets/js/app.js"></script>
+    <script src="../assets/js/budget.js"></script>
+</body>
+</html>
